@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Project2_Temp</string>
+    <string name="action_settings">издоо</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="seg">Сегодня</string>
+    <string name="todo4">TODO</string>
+    <string name="text">0000</string>
+    <string name="textCoud">Булуттар</string>
+    <string name="textwind">Шамалдын ылдамыгы</string>
+    <string name="windcommend">км саатына</string>
+    <string name="textupdate">акыркы жанылануу</string>
+    <string name="textview6">TextView</string>
+    <string name="todo7">TODO</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
