@@ -11,10 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.adilbek.project2_temp.api.ApiBatken;
 import com.example.adilbek.project2_temp.api.ApiTemp;
 import com.example.adilbek.project2_temp.models.Example;
+import com.example.adilbek.project2_temp.models.newModels.Example2;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,36 +43,48 @@ public class Batken extends Fragment {
         clouds=view.findViewById(R.id.textclouds);
         wind=view.findViewById(R.id.textwind);
         lastupdate=view.findViewById(R.id.textUpdate);
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         Retrofit retrofit =new Retrofit.Builder()
                 .baseUrl(ApiTemp.BASE_URL)
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create()).build();
-        ApiBatken apiTemp = retrofit.create(ApiBatken.class);
-        Call<Example> listCall = apiTemp.getData();
-        listCall.enqueue(new Callback<Example>() {
+        ApiTemp apiTemp = retrofit.create(ApiTemp.class);
+        Call<Example2> listCall = apiTemp.getData("Batken%20Kyrgyzstan");
+        listCall.enqueue(new Callback<Example2>() {
             String eki;
             char[] bir=new char[41];
             @Override
-            public void onResponse(Call<Example> call, Response<Example> response) {
+            public void onResponse(Call<Example2> call, Response<Example2> response) {
              //   Toast.makeText(view.getContext(),"onResponse ko keldi",Toast.LENGTH_SHORT).show();
-                Example examples=response.body();
-                celcius.setText(String.valueOf(examples.getCurrent().getTempC())+" C");
-                farangate.setText(String.valueOf(examples.getCurrent().getTempF())+" F");
-                city.setText(examples.getLocation().getName());
-                region.setText(examples.getLocation().getRegion());
-                coment.setText(examples.getCurrent().getCondition().getText());
-                loctime.setText(examples.getLocation().getLocaltime());
-                clouds.setText(String.valueOf(examples.getCurrent().getCloud()));
-                wind.setText(String.valueOf(examples.getCurrent().getWindKph()));
-                lastupdate.setText(examples.getCurrent().getLastUpdated());
-                bir=examples.getCurrent().getCondition().getIcon().toCharArray();
-                for(int i=2;i<bir.length;i++){
-                    eki+=bir[i];
+                Example2 examples=response.body();
+                if(examples != null) {
+                    if (examples.getCurrent() != null ) {
+                        celcius.setText(String.valueOf(examples.getCurrent().getTemperature()) + " C");
+                        farangate.setText("Абанын нымдуулугу: " + String.valueOf(examples.getCurrent().getHumidity()));
+                        wind.setText(String.valueOf(examples.getCurrent().getWindSpeed()));
+                        clouds.setText(String.valueOf(examples.getCurrent().getCloudcover()));
+                        lastupdate.setText(examples.getCurrent().getObservationTime());
+                        if (examples.getCurrent().getWeatherDescriptions() != null && !examples.getCurrent().getWeatherDescriptions().isEmpty())
+                            coment.setText(examples.getCurrent().getWeatherDescriptions().get(0));
+                        if (examples.getCurrent().getWeatherIcons() != null && !examples.getCurrent().getWeatherIcons().isEmpty())
+                         Glide.with(view.getContext()).load(examples.getCurrent().getWeatherIcons().get(0)).into(icon);
+                    }
+                    if (examples.getLocation() != null ) {
+                        city.setText(examples.getLocation().getCountry());
+                        region.setText(examples.getLocation().getRegion());
+                        loctime.setText(examples.getLocation().getLocaltime());
+                        for (int i = 2; i < bir.length; i++) {
+                            eki += bir[i];
+                        }
+
+                    }
                 }
-                Glide.with(view.getContext()).load(bir).into(icon);
             }
 
             @Override
-            public void onFailure(Call<Example> call, Throwable t) {
+            public void onFailure(Call<Example2> call, Throwable t) {
                 Toast.makeText(view.getContext(),"kata",Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailure: kata boldu");
             }

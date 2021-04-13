@@ -1,5 +1,6 @@
 package com.example.adilbek.project2_temp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(MainActivity.this,"Izdoo basyldy",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this,SearchActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -150,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 3 total pages. 0771 10 47 59 Nurbek Sprinter ak-0656
             return 7;
         }
     }
