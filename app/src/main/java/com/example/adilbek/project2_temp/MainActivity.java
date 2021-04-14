@@ -35,11 +35,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    // tereze jasalganda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //menchiktoolor
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //menu kuruu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //Isdoo terezesine baruu
         if (id == R.id.action_settings) {
             Toast.makeText(MainActivity.this,"Izdoo basyldy",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this,SearchActivity.class);
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             return fragment;
         }
 
+        //terezeni menchiktoo
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             super(fm);
         }
 
+        //terezelerdi indexke karap tandoo
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.

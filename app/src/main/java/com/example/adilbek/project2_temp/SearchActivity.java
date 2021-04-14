@@ -29,10 +29,12 @@ public class SearchActivity extends AppCompatActivity {
     ImageView icon;
     EditText eQuery;
     Call<Example2> callTemp;
+    // tereze jasalganda
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        // menchiktoolor
         celcius=findViewById(R.id.textCelcius);
         farangate=findViewById(R.id.textFarangate);
         city=findViewById(R.id.textCity);
@@ -45,6 +47,7 @@ public class SearchActivity extends AppCompatActivity {
         lastupdate=findViewById(R.id.textUpdate);
         eQuery = findViewById(R.id.queryText);
 
+        //internet menen ishtoo uchun retrofitti aluu
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
@@ -57,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
     public void  getTemp(View view){
         String queri = eQuery.getText().toString();
         Toast.makeText(this,queri,Toast.LENGTH_SHORT).show();
+        // maalymattardy aluu
         if (!queri.isEmpty()){
             callTemp = apiTemp.getData(queri);
             callTemp.enqueue(new Callback<Example2>() {
@@ -66,6 +70,7 @@ public class SearchActivity extends AppCompatActivity {
                 public void onResponse(Call<Example2> call, Response<Example2> response) {
 
                     Example2 examples=response.body();
+                    //kelgen maalymattardy chygaruu
                     if(examples != null) {
                         if (examples.getCurrent() != null ) {
                             celcius.setText(String.valueOf(examples.getCurrent().getTemperature()) + " C");
@@ -92,6 +97,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Example2> call, Throwable t) {
+                    // maalymattar kelbese bildiruu
                     Toast.makeText(SearchActivity.this,"Internetten kata ",Toast.LENGTH_SHORT).show();
                 }
             });

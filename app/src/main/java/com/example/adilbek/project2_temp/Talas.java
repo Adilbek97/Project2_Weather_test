@@ -27,12 +27,13 @@ public class Talas extends Fragment {
     TextView celcius,farangate,city,coment,region,loctime,clouds,wind,lastupdate;
     ImageView icon;
 
-
+    // tereze jasalganda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view= inflater.inflate(R.layout.fragment_talas, container, false);
+        // menchiktoolor
         celcius=view.findViewById(R.id.textCelcius);
         farangate=view.findViewById(R.id.textFarangate);
         city=view.findViewById(R.id.textCity);
@@ -43,18 +44,20 @@ public class Talas extends Fragment {
         clouds=view.findViewById(R.id.textclouds);
         wind=view.findViewById(R.id.textwind);
         lastupdate=view.findViewById(R.id.textUpdate);
+        //internet menen ishtoo uchun retrofitti aluu
         Retrofit retrofit =new Retrofit.Builder()
                 .baseUrl(ApiTemp.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         ApiTemp apiTemp = retrofit.create(ApiTemp.class);
+        // maalymattardy aluu
         Call<Example2> listCall = apiTemp.getData("Talas%20Kyrgyzstan");
         listCall.enqueue(new Callback<Example2>() {
             String eki;
             char[] bir=new char[41];
             @Override
             public void onResponse(Call<Example2> call, Response<Example2> response) {
-               // Toast.makeText(view.getContext(),"onResponse ko keldi",Toast.LENGTH_SHORT).show();
                 Example2 examples=response.body();
+                //kelgen maalymattardy chygaruu
                 if(examples != null) {
                     if (examples.getCurrent() != null ) {
                         celcius.setText(String.valueOf(examples.getCurrent().getTemperature()) + " C");
@@ -81,6 +84,7 @@ public class Talas extends Fragment {
 
             @Override
             public void onFailure(Call<Example2> call, Throwable t) {
+                // maalymattar kelbese bildiruu
                 Toast.makeText(view.getContext(),"kata",Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailure: kata boldu");
             }
